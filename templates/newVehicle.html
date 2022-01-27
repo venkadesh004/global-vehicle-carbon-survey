@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}
+New Vehicle
+{% endblock %}
+
+{% block nav %}
+<!-- <h1>Add New Vehicle</h1> -->
+<!-- <a href="/users/{{ username }}"><button type="button">Home</button></a> -->
+<ul>
+    <li><a href="/#front">Home</a></li>
+    <li><a href="/#about-us">About Us</a></li>
+    <li><a href="/#global-warming">Global warming</a></li>
+    <li><a href="/#api">Free API</a></li>
+    <li><a href="/users/{{ username }}">User page</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<p style="display: none;" id="username">{{ username }}</p>
+<div class="container">
+    <div class="userContainer">
+        <h1>Add New Vehicle</h1>
+        <form method="POST">
+            <div class="getInputData">
+                <div id="showInput">
+                    <div id="dataField">
+                        <input type="text" name="vehicleName" placeholder="Vehicle Name" class="vehicleName">
+                        <input type="text" name="vehicleNumber" placeholder="Vehicle Number" class="vehicleNumber">
+                        <button type="submit" name="remove" class="addNew">Add More</button>
+                    </div>
+                </div>
+                <button type="submit" id="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".addNew").click(function(e) {
+            e.preventDefault();
+            $("#showInput").prepend(`<div id="dataField">
+            <input type="text" name="vehicleName" placeholder="Vehicle Name" class="vehicleName">
+            <input type="text" name="vehicleNumber" placeholder="Vehicle Number" class="vehicleNumber">
+            <button type="submit" name="remove" class="removeElement">Remove Vehicle</button>
+            </div>`);
+        });
+
+        $(document).on('click', '.removeElement', function(e) {
+            e.preventDefault();
+            let rowItem = $(this).parent();
+            $(rowItem).remove();
+        });
+
+        var username = document.getElementById("username").innerHTML;
+
+        $("#submit").click(function(e) {
+            e.preventDefault();
+            vehicleNameList = []
+            $(".vehicleName").each(function() {
+                vehicleNameList.push($(this).val());
+            });
+            vehicleNumberList = []
+            $(".vehicleNumber").each(function() {
+                vehicleNumberList.push($(this).val());
+            });
+            // console.log(vehicleNameList, vehicleNumberList)
+            vehicleNameStr = vehicleNameList.toString();
+            vehicleNumberStr = vehicleNumberList.toString();
+            data = "vehicleName="+vehicleNameStr+"&vehicleNumber="+vehicleNumberList;
+            console.log(data);
+            console.log(username)
+            $.ajax({
+                url: '/users/'+username+'/addNewVehicle',
+                type: 'POST',
+                data: data
+            });
+        })
+});
+</script>
+{% endblock %}

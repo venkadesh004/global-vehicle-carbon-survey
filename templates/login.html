@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}
+Login Page
+{% endblock %}
+
+{% block nav %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#about-us">About Us</a></li>
+    <li><a href="/#global-warming">Global warming</a></li>
+    <li><a href="/#api">Free API</a></li>
+    <li><a href="/register">Sign Up</a></li>
+</ul>  
+{% endblock %}
+{% block content %}
+<div class="container">
+    <form method="POST" class="form">
+        <div class="mainBox">
+            <h2>Login</h2>
+            <input type="text" name="username" placeholder="Enter your username" id="username">
+            <input type="password" name="password" placeholder="Enter the password" id="password">
+            {% with messages=get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="flash">{{ message }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p class="flash"></p>
+                {% endif %}
+            {% endwith %}
+            <button type="submit" id="login">Login</button>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/login.js')  }}"></script>
+{% endblock %}

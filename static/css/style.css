@@ -1,0 +1,414 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    width: 100%;
+}
+
+nav {
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    background-color: black;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+nav ul {
+    margin-left: 800px;
+}
+
+nav ul li {
+    display: inline-block;
+    margin-right: 40px;
+    font-size: 14px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+.container {
+    position: absolute;
+    width: 100%;
+    top: 0;
+    left: 0;
+    padding-top: 50px;
+    background: linear-gradient(90.03deg, #0C0E2C 0.02%, #0C0F2D 55.23%, #131B46 99.97%);
+    color: white;
+}
+
+#front {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.start {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding-top: 80px;
+}
+
+.text-start {
+    flex-basis: 70%;
+    justify-content: center;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    text-align: center;
+}
+
+.text-start h1 {
+    font-size: 40px;
+}
+
+.start img {
+    height: 100%;
+}
+
+#front p {
+    margin-top: 160px;
+    text-align: center;
+}
+
+#about-us {
+    width: 100%;
+    height: 100vh;
+}
+
+#about-us h1 {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.aboutUsData {
+    display: flex;
+    align-items: center;
+    margin-top: 60px;
+}
+
+.text {
+    font-size: 23px;
+    flex-basis: 60%;
+    padding: 20px;
+    text-align: center;
+}
+
+#global-warming {
+    width: 100%;
+}
+
+#global-warming h1 {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.allGraphContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin-top: 40px;
+}
+
+.graphContainer {
+    margin-top: 20px;
+    width: 49%;
+    background: white;
+    padding: 20px;
+    border-radius: 50px;
+    box-shadow: inset -6px -6px 2px 1px rgba(0, 0, 0, 0.25);
+}
+
+.collected-data {
+    display: flex;
+    align-items: center;
+    height: 200px;
+    justify-content: center;
+    width: 80%;
+    margin: 0 10%;
+}
+
+.perPersonPollution {
+    padding-left: 40px;
+    display: flex;
+    align-items: center;
+    flex-basis: 50%;
+}
+
+.perPersonPollution img {
+    height: 100px;
+}
+
+.perPersonPollution p {
+    margin-left: 30px;
+    text-align: center;
+}
+
+.coEmission {
+    flex-basis: 50%;
+    display: flex;
+    align-items: center;
+}
+
+.coEmission img {
+    height: 100px;
+}
+
+.coEmission p {
+    margin-left: 30px;
+    text-align: center;
+}
+
+.coEmission span {
+    font-size: 10px;
+}
+
+#api {
+    width: 100%;
+    text-align: center;
+    height: 70vh;
+    margin-top: 100px;
+}
+
+#api p {
+    margin-top: 50px;
+    font-size: 25px;
+}
+
+.form {
+    width: 100%;
+    height: 100vh;
+    margin-top: -50px;
+    padding-top: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mainBox {
+    width: 80%;
+    height: 90%;
+    background: rgba(111, 109, 109, 0.35);
+    border-radius: 70px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.mainBox h2 {
+    margin-top: 50px;
+    font-size: 90px;
+}
+
+.mainBox input {
+    margin-top: 30px;
+    width: 500px;
+    height: 70px;
+    padding: 5px 10px 5px 20px;
+    border-radius: 40px; */
+}
+
+.flash {
+    margin-top: 20px;
+}
+
+.mainBox button {
+    margin-top: 30px;
+    width: 200px;
+    height: 100px;
+    background: #606DB6;
+    border-radius: 40px;
+    color: white;
+    font-size: 25px;
+    letter-spacing: 3px;
+    outline: none;
+    border: none;
+    box-shadow: -3px -3px 1px 2px rgba(0, 0, 0, 0.25);
+}
+
+.inputBoxes {
+    display: flex;
+    align-items: center;
+    width: 80%;
+}
+
+.leftBoxes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 50%;
+}
+
+.rightBoxes {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-basis: 50%;
+}
+
+.inputBoxes input {
+    margin-top: 30px;
+    width: 400px;
+    height: 60px;
+    padding: 2px 10px 2px 20px;
+    border-radius: 40px;
+}
+
+.coEmissionNew {
+    display: flex;
+    align-items: center;
+}
+
+.userConsumption {
+    width: 100%;
+}
+
+.userConsumption h1 {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.yourVehicle {
+    width: 100%;
+}
+
+.vehiclesList {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.yourVehicle h1 {
+    margin-top: 30px;
+    text-align: center;
+    font-size: 25px;
+}
+
+.vehicleData {
+    width: 200px;
+    height: 100px;
+    background: white;
+    box-shadow: -6px -6px 2px 1px rgba(0, 0, 0, 0.25);
+    color: black;
+    margin-left: 50px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-radius: 40px;
+}
+
+.empty {
+    height: 100px;
+}
+
+.userContainer {
+    min-height: 100vh;
+}
+
+.vehicleDetailsAdd {
+    width: 100%;
+    height: 100px;
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.addNewVehicle {
+    width: 200px;
+    height: 70px;
+    background: white;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.addNewData {
+    width: 200px;
+    height: 70px;
+    background: white;
+    border-radius: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 50px;
+}
+
+.vehicleDetailsAdd a {
+    color: black;
+    text-decoration: none;
+}
+
+.userContainer h1 {
+    margin-top: 20px;
+    margin-left: 50px;
+}
+
+.userContainer form {
+    width: 100%;
+}
+
+.getInputData {
+    width: 100%;
+}
+
+#showInput {
+    width: 100%;
+}
+
+#dataField {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#dataField input {
+    margin-left: 30px;
+    width: 300px;
+    height: 70px;
+    border-radius: 30px;
+    padding: 5px 10px 5px 20px;
+}
+
+#dataField button {
+    margin-left: 30px;
+    width: 100px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+#submit {
+    margin-top: 50px;
+    margin-left: 30px;
+    width: 100px;
+    height: 60px;
+    border-radius: 30px;
+}
+
+#dataField select {
+    height: 70px;
+    margin-left: 30px;
+    width: 200px;
+    border-radius: 30px;
+    padding: 5px 10px 5px 20px;
+}

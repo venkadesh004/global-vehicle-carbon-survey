@@ -1,0 +1,269 @@
+{% extends "base.html" %}
+
+{% block title %}
+User
+{% endblock %}
+
+{% block nav %}
+<ul>
+    <li><a href="/#front">Home</a></li>
+    <li><a href="/#about-us">About Us</a></li>
+    <li><a href="/#global-warming">Global warming</a></li>
+    <li><a href="/#api">Free API</a></li>
+    <li><a href="/logout">Logout</a></li>
+</ul>
+{% endblock %}
+
+{% block content %}
+<!-- {% if data %} -->
+    <!-- {% for key in data.vehicle %} -->
+        <!-- <p>{{ key }}</p> -->
+        <!--  <p>Petrol Consumed: {{ data.vehicle[key]["petrolConsumptionArray"] }}</p> -->
+        <!-- <p>Date: {{ data.vehicle[key]["dateArray"] }}</p> -->
+        <!-- <p>Cost: {{ data.vehicle[key]["costArray"] }}</p> --> 
+        <!-- <p>Vehicle Number: {{ data.vehicle[key]["vehicle Number"] }}</p> -->
+    <!-- {% endfor %} -->
+<!-- {% endif %} -->
+<!-- <form method="POST"> -->
+    <!-- <a href="/users/{{ username }}/addNewVehicle"><button type="button">Add new Vehicle</button></a> -->
+    <!-- <a href="/users/{{ username }}/addNewData"><button type="button">Add new Data</button></a> -->
+<!-- </form> -->
+<!-- <div class="allGraphContainer"> -->
+    <!-- <div class="graphContainer"> -->
+      <!-- <canvas class="fade-in" id="lineChart"></canvas> -->
+    <!-- </div> -->
+    <!-- <div class="graphContainer"> -->
+      <!-- <canvas class="fade-in" id="lineChart2"></canvas> -->
+    <!-- </div> -->
+    <!-- <div class="graphContainer"> -->
+      <!-- <canvas class="fade-in" id="doughnutChart"></canvas> -->
+    <!-- </div> -->
+    <!-- <div class="graphContainer"> -->
+      <!-- <canvas class="fade-in" id="pieChart"></canvas> -->
+    <!-- </div> -->
+<!-- </div> -->
+<!-- <p>{{ coEmission }}</p> -->
+<div class="container">
+    <div class="userContainer">
+        <div class="vehicleDetailsAdd">
+            <div class="addNewVehicle">
+                <a href="/users/{{ username }}/addNewVehicle">Add new Vehicle</a>
+            </div>
+            <div class="addNewData">
+                <a href="/users/{{ username }}/addNewData">Add new Data</a>
+            </div>
+        </div>
+        {% if data %}
+            <div class="yourVehicle">
+                <h1>You Vehicle</h1>
+                <div class="vehiclesList">
+                    {% for key in data.vehicle %}
+                        <div class="vehicleData">
+                            <p><b>{{ key }}</b> <br> {{ data.vehicle[key]["vehicle Number"] }}</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        <div class="userConsumption">
+            <h1>Your consumption</h1>
+            <div class="collected-data fade-in">
+              <div class="coEmissionNew">
+                <img src="{{ url_for('static', filename='images/co2.png') }}" alt="">
+                <p>Todays Total CO<span>2</span> Produced: <br> {{ coEmission }}</p>
+              </div>
+            </div>
+            <div class="allGraphContainer">
+              <div class="graphContainer fade-in">
+                <canvas id="lineChart"></canvas>
+              </div>
+              <div class="graphContainer fade-in">
+                <canvas id="lineChart2"></canvas>
+              </div>
+              <div class="graphContainer fade-in">
+                <canvas id="doughnutChart"></canvas>
+              </div>
+              <div class="graphContainer fade-in">
+                <canvas id="pieChart"></canvas>
+              </div>
+            </div>
+        </div>
+        {% endif %}
+    <div class="empty"></div>
+    </div>    
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    var graph1Prev = {{ graph1|safe }}
+    console.log(graph1Prev);
+
+    graph1Valx = [];
+    graph1Valy = [];
+
+    for(index=0; index<graph1Prev.length; index++) {
+        console.log(graph1Prev[index]);
+        graph1Valx.push(graph1Prev[index][0]);
+        graph1Valy.push(graph1Prev[index][1]);
+    }
+
+    console.log(graph1Valx, graph1Valy);
+
+    new Chart("lineChart", {
+        type: "line",
+        data: {
+            labels: graph1Valx,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(0,255,0,1.0)",
+                borderColor: "rgba(0,255,0,1.0)",
+                data: graph1Valy
+            }]
+        },
+        options: {
+            legend: {display: false}
+        }
+    });
+
+    graph2ValPrev = {{ graph2|safe }}
+    console.log(graph2ValPrev);
+
+    graph2Valx = [];
+    graph2Valy = [];
+
+    for(index=0; index<graph2ValPrev.length; index++) {
+        graph2Valx.push(graph2ValPrev[index][0]);
+        graph2Valy.push(graph2ValPrev[index][1]);
+    };
+
+    console.log(graph2Valx, graph2Valy);
+
+    colorDoughList = [];
+
+    function colorCodeGenerator(colorList) {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i=0; i<6; i++) {
+        color+=letters[Math.floor(Math.random() * 16)];
+      }
+      if (color in colorList) {
+        return colorCodeGenerator(colorList);
+      }
+      return color;
+    }
+
+    for(var j=0; j<graph2ValPrev.length; j++) {
+        color = colorCodeGenerator(colorDoughList);
+        colorDoughList.push(color);
+    };
+
+    console.log(colorDoughList);
+
+    new Chart("doughnutChart", {
+        type: "doughnut",
+        data: {
+            labels: graph2Valx,
+            datasets: [{
+                backgroundColor: colorDoughList,
+                data: graph2Valy
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Per vehicle pollutions"
+            }
+        }
+    });
+
+    var graph3Prev = {{ graph3|safe }}
+    console.log(graph3Prev);
+
+    graph3Valx = [];
+    graph3Valy = [];
+
+    for(index=0; index<graph3Prev.length; index++) {
+        console.log(graph3Prev[index]);
+        graph3Valx.push(graph3Prev[index][0]);
+        graph3Valy.push(graph3Prev[index][1]);
+    }
+
+    console.log(graph3Valx, graph3Valy);
+
+    new Chart("lineChart2", {
+        type: "line",
+        data: {
+            labels: graph3Valx,
+            datasets: [{
+                fill: false,
+                lineTension: 0,
+                backgroundColor: "rgba(255,0,0,1.0)",
+                borderColor: "rgba(255,0,0,1.0)",
+                data: graph3Valy
+            }]
+        },
+        options: {
+            legend: {display: false}
+        }
+    });
+
+    graph4ValPrev = {{ graph4|safe }}
+    console.log(graph4ValPrev);
+
+    graph4Valx = [];
+    graph4Valy = [];
+
+    for(index=0; index<graph4ValPrev.length; index++) {
+        graph4Valx.push(graph4ValPrev[index][0]);
+        graph4Valy.push(graph4ValPrev[index][1]);
+    };
+
+    console.log(graph4Valx, graph4Valy);
+
+    colorPieList = [];
+
+    for(var j=0; j<graph4ValPrev.length; j++) {
+        color = colorCodeGenerator(colorPieList);
+        colorPieList.push(color);
+    };
+
+    console.log(colorPieList);
+
+    new Chart("pieChart", {
+        type: "pie",
+        data: {
+            labels: graph4Valx,
+            datasets: [{
+                backgroundColor: colorPieList,
+                data: graph4Valy
+            }]
+        },
+        options: {
+            title: {
+                display: true,
+                text: "Per vehicle cost"
+            }
+        }
+    });
+
+    const faders = document.querySelectorAll(".fade-in");
+
+    const appearOptions = {};
+
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        } else {
+          entry.target.classList.add('appear');
+          appearOnScroll.unobserve(entry.target);
+        }
+      })
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    })
+
+</script>
+{% endblock %}

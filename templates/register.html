@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}
+Sign Up Page
+{% endblock %}
+
+{% block nav %}
+<ul>
+    <li><a href="/">Home</a></li>
+    <li><a href="/#about-us">About Us</a></li>
+    <li><a href="/#global-warming">Global warming</a></li>
+    <li><a href="/#api">Free API</a></li>
+    <li><a href="/login">login</a></li>
+</ul>  
+{% endblock %}
+
+{% block content %}
+{% with messages=get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p>{{ message }}</p>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
+<!-- <form method="POST" name="signUpForm">
+    <h2>Sign Up</h2>
+    <input type="text" name="username" placeholder="Enter a username" id="username">
+    <input type="text" name="fullName" placeholder="Enter your Full Name" id="fullName">
+    <input type="email" name="email" placeholder="Enter your email address" id="email">
+    <input type="password" name="password" placeholder="Enter your password" id="password">
+    <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirmPassword">
+    <p class="error"></p>
+    <button type="submit" id="signUP">Sign Up</button>
+</form> -->
+<div class="container">
+    <form method="POST" class="form">
+        <div class="mainBox">
+            <h2>Sign Up</h2>
+            <div class="inputBoxes">
+                <div class="leftBoxes">
+                    <input type="text" name="username" placeholder="Enter your username" id="username">
+                    <input type="text" name="fullName" placeholder="Enter your Full Name" id="fullName">
+                    <input type="email" name="email" placeholder="Enter your email address" id="email">
+                </div>
+                <div class="rightBoxes">
+                    <input type="password" name="password" placeholder="Enter your password" id="password">
+                    <input type="password" name="confirmPassword" placeholder="Confirm Password" id="confirmPassword">  
+                </div>
+            </div>        
+            {% with messages=get_flashed_messages() %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <p class="flash">{{ message }}</p>
+                    {% endfor %}
+                {% else %}
+                    <p class="flash"></p>
+                {% endif %}
+            {% endwith %}
+            <button type="submit" id="signUp">Sign Up</button>
+        </div>
+    </form>
+</div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="{{ url_for('static', filename='js/register.js')  }}"></script>
+{% endblock %}

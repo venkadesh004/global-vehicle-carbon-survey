@@ -1,0 +1,291 @@
+{% extends "base.html" %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block nav %}
+<ul>
+  <li><a href="#front">Home</a></li>
+  <li><a href="#about-us">About Us</a></li>
+  <li><a href="#global-warming">Global warming</a></li>
+  <li><a href="#api">Free API</a></li>
+  <li><a href="/login">Login</a></li>
+  <li><a href="/register">Sign Up</a></li>
+</ul>
+<!-- <a href="/login"><button type="button">Login</button></a>
+<a href="/register"><button type="button">Sign Up</button></a> -->
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <section id="front">
+    <div class="start">
+      <div class="text-start">
+        <h1>The Globe is Heating Now,<br> And we are trying to stop it using with <br>your help... </h1>
+      </div>
+      <img src="{{ url_for('static', filename='images/global-warming.gif') }}" alt="">
+    </div>
+    <p>Computer science is changing the way we look at climate change and perhaps even plays a<br>role in slowing that phenomenon.</p>
+  </section>
+  <section id="about-us">
+    <h1>About Us</h1>
+    <div class="aboutUsData fade-in">
+      <div class="text">
+        <p>We Know that our planet is getting hotter day by day. This is due to the pollution due to our activities. This problem is a rising day to day issues that is fearing the humanity to get this planet unfit for living. Many volunteers, scientists and engineers are doing there best to save the planet and here we are trying to help them by providing the data. But it can be done more accurately with the help of you. Just the help of contributing the information of how much fuel you consume pre day can be used to calculate the accurate global automobile carbon level to take severe measurements.</p>
+        <br>
+        <p>Your personal datas will be secured with us. <br>
+          So don’t worry to share your data...</p>
+      </div>
+      <div class="inImage">
+        <img src="{{ url_for('static', filename='images/burningEarth.png') }}" alt="">
+      </div>
+    </div>
+  </section>
+  <section id="global-warming">
+    <h1>Global Warming</h1>
+    <div class="collected-data fade-in">
+      <div class="perPersonPollution">
+        <img src="{{ url_for('static', filename='images/person.png') }}" alt="">
+        <p>Average Per Person Pollution Range (litres/person): <br> {{ averagePersonPollution }} </p>
+      </div>
+      <div class="coEmission">
+        <img src="{{ url_for('static', filename='images/co2.png') }}" alt="">
+        <p>Todays Total CO<span>2</span> Produced: <br> {{ coEmissionToday }}</p>
+      </div>
+    </div>
+    <div class="allGraphContainer">
+      <div class="graphContainer fade-in">
+        <canvas id="lineChart"></canvas>
+      </div>
+      <div class="graphContainer fade-in">
+        <canvas id="doughnutChart"></canvas>
+      </div>
+      <div class="graphContainer fade-in">
+        <canvas id="barChart"></canvas>
+      </div>
+      <div class="graphContainer fade-in">
+        <canvas id="pieChart"></canvas>
+      </div>
+    </div>
+  </section>
+  <section id="api" class="fade-in">
+    <h1>Free API</h1>
+    <p>You can Get all the data’s except the user data’s to imporve your models and methods to<br>prevent the global issue....</p>
+    <p>API URL:</p>
+    <p>http://127.0.0.1:5000/api/fuelconsumptiondata</p>
+  </section>
+</div>
+<!-- <p id="graph1" style="display: none;">{{ graph1 }}</p> -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+<script>
+    // var graph1ValPrev = document.getElementById("graph1").innerHTML;
+    // graph1ValPrev = graph1ValPrev.slice(3,graph1ValPrev.length-2);
+    // console.log(graph1ValPrev);
+    // var graph1ValPrev = graph1ValPrev.split(',');
+    // console.log(graph1ValPrev)
+
+    // var graph1Valx = [];
+    // var graph1Valy = [];
+    
+    // for(index=0; index<graph1ValPrev.length; index++) {
+    //     console.log(graph1ValPrev[index], graph1ValPrev[index])
+    //     graph1Valx.push(graph1ValPrev[index][0].slice(0,graph1ValPrev[index][0].length-1));
+    //     graph1Valy.push(graph1ValPrev[index][1]);
+    // }
+
+    graph1ValPrev = {{ graph1|safe }}
+
+    console.log(graph1ValPrev);
+
+    graph1Valx = [];
+    graph1Valy = [];
+
+    for(index=0; index<graph1ValPrev.length; index++) {
+        console.log(graph1ValPrev[index]);
+        graph1Valx.push(graph1ValPrev[index][0]);
+        graph1Valy.push(graph1ValPrev[index][1]);
+    }
+
+    console.log(graph1Valx, graph1Valy);
+
+    new Chart("lineChart", {
+      type: "line",
+      maintainAspectRatio: false,
+      responsive: true,
+      data: {
+        labels: graph1Valx,
+        datasets: [{
+          fill: false,
+          lineTension: 0,
+          backgroundColor: "rgba(0,0,255,1.0)",
+          borderColor: "rgba(0,0,255,0.1)",
+          data: graph1Valy
+        }]
+      },
+      options: {
+        legend: {display: false},
+        title: {
+          display: true,
+          text: "Everyday Fuel consumption"
+        }
+      }
+    });
+
+    graph2ValPrev = {{ graph2|safe }}
+    console.log("graph2");
+    console.log(graph2ValPrev);
+
+    graph2Valx = [];
+    graph2Valy = [];
+
+    for(index=0; index<graph2ValPrev.length; index++) {
+      console.log(graph2ValPrev[index]);
+      graph2Valx.push(graph2ValPrev[index][0]);
+      graph2Valy.push(graph2ValPrev[index][1]);
+    };
+
+    console.log(graph2Valx, graph2Valy);
+
+    colorList = [];
+
+    function colorCodeGenerator(colorList) {
+      var letters = "0123456789ABCDEF";
+      var color = "#";
+      for (var i=0; i<6; i++) {
+        color+=letters[Math.floor(Math.random() * 16)];
+      }
+      if (color in colorList) {
+        return colorCodeGenerator(colorList);
+      }
+      return color;
+    }
+
+    for(var j=0; j<graph2ValPrev.length; j++) {
+      color = colorCodeGenerator(colorList);
+      colorList.push(color);
+    };
+
+    console.log(colorList);
+
+    new Chart("doughnutChart", {
+      type: "doughnut",
+      data: {
+        labels: graph2Valx,
+        datasets: [{
+          backgroundColor: colorList,
+          data: graph2Valy
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Per vehicle Pollutions"
+        }
+      }
+    });
+
+    graph3ValPrev = {{ graph3|safe }};
+    console.log(graph3ValPrev);
+
+    graph3Valx = ["Places"];
+    graph3Valy = [0];
+
+    for(index in graph3ValPrev) {
+      console.log(index);
+      graph3Valx.push(index);
+      console.log(graph3ValPrev[index]);
+      graph3Valy.push(graph3ValPrev[index]);
+    }
+
+    console.log(graph3Valx, graph3Valy);
+
+    colorListBar = [];
+
+    for(var j=0; j<graph3Valx.length; j++) {
+      color = colorCodeGenerator(colorListBar);
+      console.log(color);
+      colorListBar.push(color);
+    };
+
+    console.log(colorListBar);
+
+    new Chart("barChart", {
+      type: "bar",
+      data: {
+        labels: graph3Valx,
+        datasets: [{
+          backgroundColor: colorListBar,
+          data: graph3Valy 
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Area wise pollution Levels"
+        }
+      }
+    });
+
+    graph4ValPrev = {{ graph4|safe }}
+    console.log(graph4ValPrev);
+
+    graph4Valx = [];
+    graph4Valy = [];
+
+    for(index in graph4ValPrev) {
+      console.log(index);
+      graph4Valx.push(index);
+      console.log(graph4ValPrev[index]);
+      graph4Valy.push(graph4ValPrev[index]);
+    }
+
+    console.log(graph4Valx, graph4Valy);
+
+    colorListVehicle = [];
+
+    for(var j=0; j<graph4Valx.length; j++) {
+      color = colorCodeGenerator(colorListVehicle);
+      console.log(color);
+      colorListVehicle.push(color);
+    };
+
+    console.log(colorListVehicle);
+
+    new Chart("pieChart", {
+      type: "pie",
+      data: {
+        labels: graph4Valx,
+        datasets: [{
+          backgroundColor: colorListVehicle,
+          data: graph4Valy
+        }]
+      },
+      options: {
+        title: {
+          display: true,
+          text: "Vehicle used"
+        }
+      }
+    });
+
+    const faders = document.querySelectorAll(".fade-in");
+
+    const appearOptions = {threshold: 1};
+
+    const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) {
+          return;
+        } else {
+          entry.target.classList.add('appear');
+          appearOnScroll.unobserve(entry.target);
+        }
+      })
+    }, appearOptions);
+
+    faders.forEach(fader => {
+      appearOnScroll.observe(fader);
+    })
+</script>
+{% endblock %}
